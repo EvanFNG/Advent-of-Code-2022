@@ -1,8 +1,4 @@
-import functools
-
-# Sample
-
-with open('input_files/day_2_sample.txt', 'r') as f:
+with open('input_files/day2.txt', 'r') as f:
     data = [i.split(' ') for i in f.read().splitlines()]
 
 def rock_paper_scissors(move_list: list) -> tuple:
@@ -47,11 +43,15 @@ def rock_paper_scissors(move_list: list) -> tuple:
 
     translation = (p1_dict[move_list[0]], p2_dict[move_list[1]])
 
-    return round_result_dict[translation]
+    if translation in round_result_dict:
 
-result = functools.reduce(lambda x, y: x[-1] + y[-1], [(1, 8), (2, 9)])
+        return round_result_dict[translation]
 
-print(result)
+    else:
+        return round_result_dict[translation[::-1]][::-1]
 
-for i in data:
-    print(rock_paper_scissors(i))
+scores = list(map(rock_paper_scissors, data))
+
+p2_scores = [i[1] for i in scores]
+
+print(sum(p2_scores))
