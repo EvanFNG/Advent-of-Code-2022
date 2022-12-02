@@ -1,7 +1,5 @@
 # Part 1
 
-
-
 with open('input_files/day1_1.txt', 'r') as f:
     data = f.read().splitlines()
 
