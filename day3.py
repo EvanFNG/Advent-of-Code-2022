@@ -24,7 +24,7 @@ upper_dict = {letter: value + 27 for value, letter in enumerate(ascii_uppercase)
 # Merges the two dictionaries.
 letter_dict = lower_dict | upper_dict
 
-with open('day3.txt', 'r') as f:
+with open('input_files/day3.txt', 'r') as f:
     data = f.read().splitlines()
 
 split_inputs = [split_half(i) for i in data]
