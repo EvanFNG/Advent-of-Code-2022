@@ -1,4 +1,4 @@
-from string import ascii_lowercase, ascii_uppercase
+from string import ascii_letters
 from functools import reduce
 from itertools import zip_longest
 
@@ -41,11 +41,7 @@ def grouper(iterable, n, *, incomplete='fill', fillvalue=None):
     else:
         raise ValueError('Expected fill, strict, or ignore')
 
-lower_dict = {letter: value + 1 for value, letter in enumerate(ascii_lowercase)}
-upper_dict = {letter: value + 27 for value, letter in enumerate(ascii_uppercase)}
-
-# Merges the two dictionaries.
-letter_dict = lower_dict | upper_dict
+letter_dict = {letter: value + 1 for value, letter in enumerate(ascii_letters)}
 
 with open('input_files/day3.txt', 'r') as f:
     data = f.read().splitlines()
