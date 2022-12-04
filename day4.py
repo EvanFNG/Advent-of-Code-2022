@@ -37,3 +37,4 @@ bool_list = [range_overlaps(i) for i in rng_list]
 
 part_one_solution = bool_list.count(True)
 
+part_two_solution = sum(map(lambda x: len(set(x[0]) & set(x[1])) > 0, rng_list))
