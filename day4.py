@@ -14,7 +14,7 @@ def str_to_range(s: str) -> range:
     num_list = [int(i) for i in s.split('-')]
     return range(num_list[0], num_list[1] + 1)
 
-def range_overlaps(range_list: list) -> bool:
+def range_includes(range_list: list) -> bool:
     '''
     Given a list of two range objects,
     checks to see if either range is fully contained
@@ -23,8 +23,8 @@ def range_overlaps(range_list: list) -> bool:
     Returns: bool
 
     Examples:
-    range_overlaps([range(3, 11), range(4, 7)]) -> True
-    range_overlaps([range(8, 13), range(42, 50)]) -> False
+    range_includes([range(3, 11), range(4, 7)]) -> True
+    range_includes([range(8, 13), range(42, 50)]) -> False
     '''
 
     setlist = [set(i) for i in range_list]
@@ -33,7 +33,7 @@ def range_overlaps(range_list: list) -> bool:
 
 rng_list = [list(map(str_to_range, i)) for i in sublists]
 
-bool_list = [range_overlaps(i) for i in rng_list]
+bool_list = [range_includes(i) for i in rng_list]
 
 part_one_solution = sum(bool_list)
 
