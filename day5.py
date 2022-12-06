@@ -10,16 +10,16 @@ df = df.iloc[:, 0].str.split(r"\s+", expand = True, regex = True)
 column_list = []
 
 for col_name, col_data in df.items():
-    column_list.append(col_data.tolist())
+    column_list.append([i for i in col_data.tolist() if i != ''])
 
 with open('input_files/day5_sample_moves.txt', 'r') as file:
     move_list = file.read().splitlines()
 
-def read_move(s: str) -> list:
+def read_move(s: str) -> list[int]:
     '''
     Reads a move of the format 'move a from b to c' as [a, b, c]
 
-    a: number to take
+    a: number to take / of times to repeat
     b: list to take from
     c: list to move to
 
@@ -32,23 +32,24 @@ def read_move(s: str) -> list:
 
     return [int(i) for i in s if i.isdigit()]
 
+def move(move_list: list[int], crate_list: list[list[str]]) -> list[list[str]]:
+
+    # Copy of crate_list
+    # Modify this rather than the input
+    result_list = [i.copy() for i in crate_list]
+
+    repeats = move_list[0]
+    move_from_index = move_list[1] - 1
+    move_to_index = move_list[2] - 1
+
+    return result_list
+
 numerical_moves = [read_move(i) for i in move_list]
 
-def make_move(move_list: list, crate_list: list) -> list:
+print(column_list)
+print(move_list)
+print(numerical_moves)
+print('\n\n')
 
-    new_list = [i.copy() for i in crate_list]
-    num_to_take = move_list[0]
-    move_from = move_list[1] - 1
-    move_to = move_list[2] - 1
-
-    content = crate_list[move_from][:num_to_take]
-
-    new_list[move_to][:num_to_take] = content
-    new_list[move_from][:num_to_take] = ''
-
-    for _ in range(num_to_take):
-        new_list[move_from].insert(0, '')
-
-    return new_list
-
-parsed_moves = [read_move(i) for i in move_list]
+for i in numerical_moves:
+    print(move(move_list = i, crate_list = column_list))

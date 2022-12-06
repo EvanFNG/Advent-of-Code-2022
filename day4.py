@@ -14,7 +14,7 @@ def str_to_range(s: str) -> range:
     num_list = [int(i) for i in s.split('-')]
     return range(num_list[0], num_list[1] + 1)
 
-def range_includes(range_list: list) -> bool:
+def range_includes(range_list: list[range]) -> bool:
     '''
     Given a list of two range objects,
     checks to see if either range is fully contained
