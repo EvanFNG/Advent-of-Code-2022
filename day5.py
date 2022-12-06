@@ -36,7 +36,7 @@ numerical_moves = [read_move(i) for i in move_list]
 
 def make_move(move_list: list, crate_list: list) -> list:
 
-    new_list = crate_list.copy()
+    new_list = [i.copy() for i in crate_list]
     num_to_take = move_list[0]
     move_from = move_list[1] - 1
     move_to = move_list[2] - 1
@@ -46,8 +46,9 @@ def make_move(move_list: list, crate_list: list) -> list:
     new_list[move_to][:num_to_take] = content
     new_list[move_from][:num_to_take] = ''
 
+    for _ in range(num_to_take):
+        new_list[move_from].insert(0, '')
+
     return new_list
 
-print(column_list)
-print('\n', move_list, '\n')
-print(make_move(move_list = read_move(move_list[0]), crate_list = column_list))
+parsed_moves = [read_move(i) for i in move_list]
