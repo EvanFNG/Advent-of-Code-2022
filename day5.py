@@ -12,6 +12,12 @@ column_list = [
     ['[T]', '[F]', '[B]', '[N]', '[Q]', '[L]', '[H]']
 ]
 
+sample = [
+    ['[N]', '[Z]'],
+    ['[D]', '[C]', '[M]'],
+    ['[P]']
+]
+
 with open('input_files/day5_moves.txt', 'r') as file:
     move_list = file.read().splitlines()
 
@@ -96,3 +102,23 @@ print('\n\n')
 
 # print(part_one_string)
 
+# a = move2([1, 2, 1], sample)
+# b = move2([3, 1, 3], a)
+# c = move2([2, 2, 1], b)
+# d = move2([1, 1, 2], c)
+
+# print(sample)
+# print(a)
+# print(b)
+# print(c)
+# print(d)
+
+for i in numerical_moves:
+    column_list = move2(move_list = i, crate_list = column_list)
+
+part_two_string = ''
+
+for lst in column_list:
+    part_two_string += lst[0][1]
+
+print(part_two_string)
