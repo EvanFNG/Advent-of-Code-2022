@@ -1,12 +1,3 @@
-samples = [
-    'mjqjpqmgbljsphdztnvjfqwrcgsmlb',
-    'bvwbjplbgvbhsrlpgdmjqwftvncz',
-    'nppdvjthqldpwncqszvftbrmjlhg',
-    'nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg',
-    'zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw',
-]
-
-
 def first_marker_position(signal: str, n: int) -> int:
     '''
     Returns the first position of signal
