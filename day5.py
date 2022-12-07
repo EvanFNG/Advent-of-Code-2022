@@ -38,9 +38,25 @@ def move(move_list: list[int], crate_list: list[list[str]]) -> list[list[str]]:
     # Modify this rather than the input
     result_list = [i.copy() for i in crate_list]
 
+    # Number of iterations
     repeats = move_list[0]
+
+    # Index of list to take from is 1 less than the second element of move_list
     move_from_index = move_list[1] - 1
+
+    # Index of list to move to is 1 less than the third element of move_list
     move_to_index = move_list[2] - 1
+
+    for _ in range(repeats):
+
+        # Item to be moved
+        content = result_list[move_from_index][0]
+        
+        # Insert the content at the beginnig of the correct list
+        result_list[move_to_index].insert(0, content)
+
+        # Remove the content from the list taken from
+        result_list[move_from_index].pop(0)
 
     return result_list
 
@@ -52,4 +68,6 @@ print(numerical_moves)
 print('\n\n')
 
 for i in numerical_moves:
-    print(move(move_list = i, crate_list = column_list))
+    column_list = move(move_list = i, crate_list = column_list)
+
+print(column_list)
