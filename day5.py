@@ -60,15 +60,39 @@ def move(move_list: list[int], crate_list: list[list[str]]) -> list[list[str]]:
 
     return result_list
 
+def move2(move_list: list[int], crate_list: list[list[str]]) -> list[list[str]]:
+
+    result_list = [i.copy() for i in crate_list]
+
+    quantity = move_list[0]
+
+    move_from_index = move_list[1] - 1
+
+    move_to_index = move_list[2] - 1
+
+    content = result_list[move_from_index][:quantity]
+
+    for crate in content[::-1]:
+        result_list[move_to_index].insert(0, crate)
+        result_list[move_from_index].remove(crate)
+
+    return result_list
+
+
+
 numerical_moves = [read_move(i) for i in move_list]
 
 print(column_list)
 print('\n\n')
 
-for i in numerical_moves:
-    column_list = move(move_list = i, crate_list = column_list)
+# Part 1 Solution
+# for i in numerical_moves:
+#     column_list = move(move_list = i, crate_list = column_list)
 
-part_one_string = ''
+# part_one_string = ''
 
-for lst in column_list:
-    part_one_string += lst[0][1]
+# for lst in column_list:
+#     part_one_string += lst[0][1]
+
+# print(part_one_string)
+
