@@ -1,18 +1,18 @@
-import pandas as pd
+import re
 
-df = pd.read_table('input_files/day5_sample.txt', sep = '\t')
+column_list = [
+    ['[W]', '[L]', '[S]'],
+    ['[Q]', '[N]', '[T]', '[J]'],
+    ['[J]', '[F]', '[H]', '[C]', '[S]'],
+    ['[B]', '[G]', '[N]', '[W]', '[M]', '[R]', '[T]'],
+    ['[B]', '[Q]', '[H]', '[D]', '[S]', '[L]', '[R]', '[T]'],
+    ['[L]', '[R]', '[H]', '[F]', '[V]', '[B]', '[J]', '[M]'],
+    ['[M]', '[J]', '[N]', '[R]', '[W]', '[D]'],
+    ['[J]', '[D]', '[N]', '[H]', '[F]', '[T]', '[Z]', '[B]'],
+    ['[T]', '[F]', '[B]', '[N]', '[Q]', '[L]', '[H]']
+]
 
-# Use header as first row
-df = df.T.reset_index().T.reset_index(drop = True)
-
-df = df.iloc[:, 0].str.split(r"\s+", expand = True, regex = True)
-
-column_list = []
-
-for col_name, col_data in df.items():
-    column_list.append([i for i in col_data.tolist() if i != ''])
-
-with open('input_files/day5_sample_moves.txt', 'r') as file:
+with open('input_files/day5_moves.txt', 'r') as file:
     move_list = file.read().splitlines()
 
 def read_move(s: str) -> list[int]:
@@ -29,8 +29,8 @@ def read_move(s: str) -> list[int]:
     Example:
     read_move('move 1 from 2 to 1') -> [1, 2, 1]
     '''
-
-    return [int(i) for i in s if i.isdigit()]
+    regex = re.compile(r"(\d{1,2})")
+    return [int(i) for i in regex.findall(s)]
 
 def move(move_list: list[int], crate_list: list[list[str]]) -> list[list[str]]:
 
@@ -63,11 +63,12 @@ def move(move_list: list[int], crate_list: list[list[str]]) -> list[list[str]]:
 numerical_moves = [read_move(i) for i in move_list]
 
 print(column_list)
-print(move_list)
-print(numerical_moves)
 print('\n\n')
 
 for i in numerical_moves:
     column_list = move(move_list = i, crate_list = column_list)
 
-print(column_list)
+part_one_string = ''
+
+for lst in column_list:
+    part_one_string += lst[0][1]
