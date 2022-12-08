@@ -59,10 +59,16 @@ def tree_neighbors_2(point: list[int], arr: list[list[int]]) -> list[list[int]]:
     l.append(col)
 
     l[0].pop(y)
-    l[1].pop(y)
+    l[1].pop(x)
 
     return l
 
-    
+for row_index, row in enumerate(data):
+    for tree_index, tree in enumerate(row):
+        x, y = [row_index, tree_index]
+        max_list = [max(i) for i in tree_neighbors_2([x, y], data)]
 
-print(tree_neighbors_2([4, 4], data))
+        if (tree > max(max_list)):
+            viz_count += 1
+
+print(viz_count)
