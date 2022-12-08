@@ -3,7 +3,8 @@ with open('input_files/day8_sample.txt', 'r') as f:
     data = [[int(y) for y in list(x)] for x in text]
 
 # Initial count formula
-viz_count = 2 * (len(data[0]) + len(data) - 2)
+# viz_count = 2 * (len(data[0]) + len(data) - 2)
+viz_count = 0
 
 for i in data:
     print(*i)
@@ -43,7 +44,25 @@ def tree_neighbors(point_index: list[int], arr: list[list[int]]) -> list[int]:
 
     return neighbors
 
-tree = [0,4]
+def tree_neighbors_2(point: list[int], arr: list[list[int]]) -> list[list[int]]:
 
-print(neighbor_coords(tree))
-print(tree_neighbors(tree, arr = data))
+    x, y = point
+    self = arr[x][y]
+
+    l = [[i for i in arr[x]]]
+
+    col = []
+
+    for row in arr:
+        col.append(row[y])
+    
+    l.append(col)
+
+    l[0].pop(y)
+    l[1].pop(y)
+
+    return l
+
+    
+
+print(tree_neighbors_2([4, 4], data))
