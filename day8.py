@@ -34,9 +34,16 @@ def tree_neighbors(point_index: list[int], arr: list[list[int]]) -> list[int]:
     neighbors = []
 
     for coord in coords:
-        neighbors.append(arr[coord[0]][coord[1]])
+        try:
+            # Negative coordinates should be tossed
+            if (coord[0] >= 0) and (coord[1] >= 0):
+                neighbors.append(arr[coord[0]][coord[1]])
+        except IndexError:
+            pass
 
     return neighbors
 
-print(neighbor_coords([1,2]))
-print(tree_neighbors([1,2], arr = data))
+tree = [0,4]
+
+print(neighbor_coords(tree))
+print(tree_neighbors(tree, arr = data))
