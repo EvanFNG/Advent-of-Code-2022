@@ -33,27 +33,10 @@ def tree_neighbors(point_index: list[int], arr: list[list[int]]) -> list[int]:
     coords = neighbor_coords(point_index)
     neighbors = []
 
-    
+    for coord in coords:
+        neighbors.append(arr[coord[0]][coord[1]])
 
+    return neighbors
 
-# def count_visible_trees(arr: list[list[int], list[int], list[int]]) -> int:
-#     init_count = 0
-
-#     for rows in arr[:2]:
-#         pass
-
-
-
-
-# for row_index, row in enumerate(data):
-#     # Determine the three arrays of trees to check
-#     if row_index == 0:
-#         tree_lists = [row, data[row_index+1], data[row_index+2]]
-#     elif row_index == len(data):
-#         tree_lists = [data[-3], data[-2], row]
-#     else:
-#         tree_lists = [data[row_index-1], row, data]
-
-
-
-print(neighbor_coords([0,0]))
+print(neighbor_coords([1,2]))
+print(tree_neighbors([1,2], arr = data))
