@@ -81,11 +81,3 @@ def first_marker_position(signal: str, n: int) -> int:
             break
 
     return position
-
-with open('input_files/day6.txt', 'r') as f:
-    data = f.read()
-
-part_one_solution = first_marker_position(signal = data, n = 4)
-part_two_solution = first_marker_position(signal = data, n = 14)
-
-print(part_two_solution)
