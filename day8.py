@@ -1,4 +1,4 @@
-with open('input_files/day8_sample.txt', 'r') as f:
+with open('input_files/day8.txt', 'r') as f:
     text = f.read().splitlines()
     data = [[int(y) for y in list(x)] for x in text]
 
@@ -310,36 +310,30 @@ def tree_neighbors_all(point: list[int], arr: list[list[int]]) -> list[list[int]
 
     return l
 
-# data_length = len(data)
-# neighbor_list = []
+data_length = len(data)
 
-# # viz_count will be the answer to part 1
-# for row_index, row in enumerate(data):
-#     for tree_index, tree in enumerate(row):
-#         x, y = [row_index, tree_index]
-#         neighbors = tree_neighbors_all([x, y], data)
-#         neighbors_max = [max(i) for i in neighbors]
-#         viz_bool = any([tree > i for i in neighbors_max])
+# viz_count will be the answer to part 1
+for row_index, row in enumerate(data):
+    for tree_index, tree in enumerate(row):
+        x, y = [row_index, tree_index]
+        neighbors = tree_neighbors_all([x, y], data)
+        neighbors_max = [max(i) for i in neighbors]
+        viz_bool = any([tree > i for i in neighbors_max])
 
-#         if any(
-#             [
-#                 viz_bool,
-#                 row_index in [0, data_length - 1],
-#                 tree_index in [0, data_length - 1]
-#             ]
-#         ):
-#             viz_count += 1
+        if any(
+            [
+                viz_bool,
+                row_index in [0, data_length - 1],
+                tree_index in [0, data_length - 1]
+            ]
+        ):
+            viz_count += 1
 
-#         neighbor_list.append(neighbors)
+scores = []
 
-for i in data:
-    print(*i)
+for row_index, row in enumerate(data):
+    for tree_index, tree in enumerate(row):
+        curr_tree = Tree(coords = [row_index, tree_index], arr = data)
+        scores.append(curr_tree.scenic_score())
 
-print('\n')
-
-t = Tree(coords = [4, 2], arr = data)
-
-print(t.location())
-print(t.height())
-print(t.neighbors_all())
-print(t.scenic_score())
+part_two_solution = max(scores)
