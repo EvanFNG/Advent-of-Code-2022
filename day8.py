@@ -1,4 +1,6 @@
-with open('input_files/day8.txt', 'r') as f:
+from functools import reduce
+
+with open('input_files/day8_sample.txt', 'r') as f:
     text = f.read().splitlines()
     data = [[int(y) for y in list(x)] for x in text]
 
@@ -43,6 +45,7 @@ def tree_neighbors_all(point: list[int], arr: list[list[int]]) -> list[list[int]
     '''
     Similar to tree_neighbors_adjacent,
     but returns the entire neighboring column and row.
+    Always returns in order [left, right, up, down]
 
     >>> tree_neighbors_all([1, 1], [[1, 2, 3], [4, 5, 6], [7, 8, 9]])
     [[4], [6], [2], [8]]
@@ -69,14 +72,33 @@ def tree_neighbors_all(point: list[int], arr: list[list[int]]) -> list[list[int]
 
     return l
 
+def scenic_score(point: list[int], arr: data = list[list[int]]) -> int:
+
+    x, y = point
+    n = arr[x][y]
+    
+    neighbors = tree_neighbors_all(point, arr)
+
+    for row_index, row in enumerate(neighbors):
+        if max(row) > n:
+            neighbors.pop(row_index)
+    
+
+    sums = list(map(len, neighbors))
+
+    return sums
+
 data_length = len(data)
+neighbor_list = []
 
 # viz_count will be the answer to part 1
 for row_index, row in enumerate(data):
     for tree_index, tree in enumerate(row):
         x, y = [row_index, tree_index]
-        neighbors = [max(i) for i in tree_neighbors_all([x, y], data)]
-        viz_bool = any([tree > i for i in neighbors])
+        neighbors = tree_neighbors_all([x, y], data)
+        neighbors_max = [max(i) for i in neighbors]
+        viz_bool = any([tree > i for i in neighbors_max])
+
         if any(
             [
                 viz_bool,
@@ -85,3 +107,12 @@ for row_index, row in enumerate(data):
             ]
         ):
             viz_count += 1
+
+        neighbor_list.append(neighbors)
+
+for i in data:
+    print(*i)
+
+print('\n')
+
+print(tree_neighbors_all([3, 1], data))
