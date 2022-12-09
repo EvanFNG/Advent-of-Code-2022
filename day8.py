@@ -49,26 +49,32 @@ def tree_neighbors_2(point: list[int], arr: list[list[int]]) -> list[list[int]]:
     x, y = point
     self = arr[x][y]
 
-    l = [[i for i in arr[x]]]
+    l = [[i for i in arr[x][:y]], [j for j in arr[x][y+1:]]]
 
-    col = []
+    col1 = []
+    col2 = []
 
-    for row in arr:
-        col.append(row[y])
+    for row_index, row in enumerate(arr[:x]):
+            col1.append(row[y])
+
+    l.append(col1)
+
+    for row_index, row in enumerate(arr[x+1:]):
+        col2.append(row[y])
     
-    l.append(col)
+    l.append(col2)
 
-    l[0].pop(y)
-    l[1].pop(x)
+    l = [i for i in l if i != []]
 
     return l
 
+samples = [[1, 1], [1, 2], [2, 1], [2, 3], [3, 2]]
+
+d = {}
+
 for row_index, row in enumerate(data):
-    for tree_index, tree in enumerate(row):
+    for tree_index, tree in enumerate(data):
         x, y = [row_index, tree_index]
-        max_list = [max(i) for i in tree_neighbors_2([x, y], data)]
+        d[(x, y)] = [max(i) for i in tree_neighbors_2([x, y], data)]
 
-        if (tree > max(max_list)):
-            viz_count += 1
-
-print(viz_count)
+print(d)
