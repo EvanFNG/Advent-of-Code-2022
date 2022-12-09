@@ -1,15 +1,9 @@
-with open('input_files/day8_sample.txt', 'r') as f:
+with open('input_files/day8.txt', 'r') as f:
     text = f.read().splitlines()
     data = [[int(y) for y in list(x)] for x in text]
 
-# Initial count formula
-# viz_count = 2 * (len(data[0]) + len(data) - 2)
+# Running total of visible trees
 viz_count = 0
-
-for i in data:
-    print(*i)
-
-print('\n')
 
 def neighbor_coords(start: list[int]) -> list[list[int]]:
     '''
@@ -22,12 +16,13 @@ def neighbor_coords(start: list[int]) -> list[list[int]]:
     x, y = start
     return [[x+1, y], [x-1, y], [x, y-1], [x, y+1]]
 
-def tree_neighbors(point_index: list[int], arr: list[list[int]]) -> list[int]:
+def tree_neighbors_adjacent(point_index: list[int], arr: list[list[int]]) -> list[int]:
     '''
-    Returns a tree's neighbors given its index
+    Returns a tree's adjacent neighbors given its index
     and the 2D array it's contained in.
+    Does not include diagonals.
 
-    >>> tree_neighbors([1, 1], [[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    >>> tree_neighbors_adjacent([1, 1], [[1, 2, 3], [4, 5, 6], [7, 8, 9]])
     [2, 4, 6, 8]
     '''
 
@@ -44,22 +39,28 @@ def tree_neighbors(point_index: list[int], arr: list[list[int]]) -> list[int]:
 
     return neighbors
 
-def tree_neighbors_2(point: list[int], arr: list[list[int]]) -> list[list[int]]:
+def tree_neighbors_all(point: list[int], arr: list[list[int]]) -> list[list[int]]:
+    '''
+    Similar to tree_neighbors_adjacent,
+    but returns the entire neighboring column and row.
+
+    >>> tree_neighbors_all([1, 1], [[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    [[4], [6], [2], [8]]
+    '''
 
     x, y = point
-    self = arr[x][y]
 
     l = [[i for i in arr[x][:y]], [j for j in arr[x][y+1:]]]
 
     col1 = []
     col2 = []
 
-    for row_index, row in enumerate(arr[:x]):
+    for row in arr[:x]:
             col1.append(row[y])
 
     l.append(col1)
 
-    for row_index, row in enumerate(arr[x+1:]):
+    for row in arr[x+1:]:
         col2.append(row[y])
     
     l.append(col2)
@@ -68,24 +69,19 @@ def tree_neighbors_2(point: list[int], arr: list[list[int]]) -> list[list[int]]:
 
     return l
 
-samples = [[1, 1], [1, 2], [2, 1], [2, 3], [3, 2]]
+data_length = len(data)
 
-d = {}
-
-for row_index, row in enumerate(data[1:]):
-    for tree_index, tree in enumerate(row[1:4]):
+# viz_count will be the answer to part 1
+for row_index, row in enumerate(data):
+    for tree_index, tree in enumerate(row):
         x, y = [row_index, tree_index]
-        d[(x, y)] = [max(i) for i in tree_neighbors_2([x, y], data)]
-
-for k, v in d.items():
-    x, y = k
-    value = data[x][y]
-
-    if (any([value > i for i in v])):
-        viz_count += 1
-
-# for i in samples:
-#     x, y = i
-#     print(data[x][y], tree_neighbors_2(i, data))
-
-print(viz_count)
+        neighbors = [max(i) for i in tree_neighbors_all([x, y], data)]
+        viz_bool = any([tree > i for i in neighbors])
+        if any(
+            [
+                viz_bool,
+                row_index in [0, data_length - 1],
+                tree_index in [0, data_length - 1]
+            ]
+        ):
+            viz_count += 1
