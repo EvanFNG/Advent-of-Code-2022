@@ -95,152 +95,27 @@ class Tree:
 
             return score
 
-        match self.location():
+        if self.location() == 'Inner':
 
-            case 'Inner':
-                row_left = neighbors[0]
-                row_right = neighbors[1]
-                col_up = neighbors[2]
-                col_down = neighbors[3]
+            row_left = neighbors[0]
+            row_right = neighbors[1]
+            col_up = neighbors[2]
+            col_down = neighbors[3]
 
-                row_left.reverse()
-                col_up.reverse()
+            row_left.reverse()
+            col_up.reverse()
 
-                trees = [row_left, row_right, col_up, col_down]
+            trees = [row_left, row_right, col_up, col_down]
 
-                total = 1
+            total = 1
 
-                for tree_list in trees:
-                    total *= tally(height = self.height(), trees = tree_list)
+            for tree_list in trees:
+                total *= tally(height = self.height(), trees = tree_list)
 
-                return total
+            return total
 
-            case 'Top-Left':
-                row_right = neighbors[0]
-                col_down = neighbors[1]
-
-                trees = [row_right, col_down]
-
-                total = 1
-
-                for tree_list in trees:
-                    total *= tally(self.height(), tree_list)
-
-                return total
-
-            case 'Top-Right':
-                row_left = neighbors[0]
-                col_down = neighbors[1]
-
-                row_left.reverse()
-
-                trees = [row_left, col_down]
-
-                total = 1
-
-                for tree_list in trees:
-                    total *= tally(self.height(), tree_list)
-
-                return total
-
-            case 'Bottom-Left':
-                row_right = neighbors[0]
-                col_up = neighbors[1]
-
-                col_up.reverse()
-                trees = [row_right, col_up]
-
-                total = 1
-                
-                for tree_list in trees:
-                    total *= tally(self.height(), tree_list)
-
-                return total
-
-            case 'Bottom-Right':
-                row_left = neighbors[0]
-                col_up = neighbors[1]
-
-                row_left.reverse()
-                col_up.reverse()
-
-                trees = [row_left, col_up]
-
-                total = 1
-
-                for tree_list in trees:
-                    total *= tally(self.height(), tree_list)
-
-                return total
-
-            case 'Outer-Left':
-                row_right = neighbors[0]
-                col_up = neighbors[1]
-                col_down = neighbors[2]
-
-                col_up.reverse()
-
-                trees = [row_right, col_up, col_down]
-
-                total = 1
-
-                for tree_list in trees:
-                    total *= tally(self.height(), tree_list)
-
-                return total
-
-            case 'Outer-Right':
-                row_left = neighbors[0]
-                col_up = neighbors[1]
-                col_down = neighbors[2]
-
-                row_left.reverse()
-                col_up.reverse()
-
-                trees = [row_left, col_up, col_down]
-
-                total = 1
-
-                for tree_list in trees:
-                    total *= tally(self.height(), tree_list)
-
-                return total
-
-            case 'Outer-Top':
-                row_left = neighbors[0]
-                row_right = neighbors[1]
-                col_down = neighbors[2]
-
-                row_left.reverse()
-
-                trees = [row_left, row_right, col_down]
-
-                total = 1
-
-                for tree_list in trees:
-                    total *= tally(self.height(), tree_list)
-
-                return total
-
-            case 'Outer-Bottom':
-                row_left = neighbors[0]
-                row_right = neighbors[1]
-                col_up = neighbors[2]
-
-                row_left.reverse()
-                col_up.reverse()
-
-                trees = [row_left, row_right, col_up]
-
-                total = 1
-
-                for tree_list in trees:
-                    total *= tally(self.height(), tree_list)
-
-                return total
-
-            case _:
-                return 0
+        else:
+            return 0
 
 # Running total of visible trees
 visibile_count = 0
@@ -264,3 +139,5 @@ for row_index, row in enumerate(data):
         scores.append(curr_tree.scenic_score())
 
 part_two_solution = max(scores)
+
+print(part_two_solution)
