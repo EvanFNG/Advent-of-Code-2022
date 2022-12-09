@@ -72,9 +72,20 @@ samples = [[1, 1], [1, 2], [2, 1], [2, 3], [3, 2]]
 
 d = {}
 
-for row_index, row in enumerate(data):
-    for tree_index, tree in enumerate(data):
+for row_index, row in enumerate(data[1:]):
+    for tree_index, tree in enumerate(row[1:4]):
         x, y = [row_index, tree_index]
         d[(x, y)] = [max(i) for i in tree_neighbors_2([x, y], data)]
 
-print(d)
+for k, v in d.items():
+    x, y = k
+    value = data[x][y]
+
+    if (any([value > i for i in v])):
+        viz_count += 1
+
+# for i in samples:
+#     x, y = i
+#     print(data[x][y], tree_neighbors_2(i, data))
+
+print(viz_count)
