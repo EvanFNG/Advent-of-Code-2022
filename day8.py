@@ -10,10 +10,6 @@ class Tree:
 
         # Assume square array
         self.max_index = len(arr[0]) - 1
-    
-    def __repr__(self) -> str:
-        x, y = self.coords
-        return f'{self.coords}: {self.arr[x][y]}'
 
     def height(self) -> int:
         x, y = self.coords
@@ -21,8 +17,7 @@ class Tree:
 
     def location(self) -> str:
         '''
-        Determines whether the Tree is
-        an Inner Tree or Outer Tree.
+        Determines whether the Tree is an Inner Tree or Outer Tree.
         '''
         x, y = self.coords
 
