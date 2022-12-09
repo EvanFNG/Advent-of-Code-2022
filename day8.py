@@ -89,6 +89,16 @@ class Tree:
         neighbors = self.neighbors_all()
         h = self.height()
 
+        def tally(height: self.height(), trees: list) -> int:
+
+            score = 0
+            for tree in trees:
+                score += 1
+                if height <= tree:
+                    break
+            
+            return score
+
         match self.location():
 
             case 'Inner':
@@ -97,33 +107,17 @@ class Tree:
                 col_up = neighbors[2]
                 col_down = neighbors[3]
 
-                score = 0
+                row_left.reverse()
+                col_up.reverse()
 
-                for tree in row_left[::-1]:
-                    if h > tree:
-                        score += 1
-                    else:
-                        break
-                
-                for tree in row_right:
-                    if h > tree:
-                        score += 1
-                    else:
-                        break
-                
-                for tree in col_up[::-1]:
-                    if h > tree:
-                        score += 1
-                    else:
-                        break
+                trees = [row_left, row_right, col_up, col_down]
 
-                for tree in col_down:
-                    if h > tree:
-                        score += 1
-                    else:
-                        break
+                total = 0
 
-                return score
+                for tree_list in trees:
+                    total += tally(height = self.height(), trees = tree_list)
+
+                return total
 
 # Running total of visible trees
 viz_count = 0
