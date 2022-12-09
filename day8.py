@@ -17,10 +17,6 @@ class Tree:
         x, y = self.coords
         return f'{self.coords}: {self.arr[x][y]}'
 
-    def neighbord_coords(self) -> list[list[int]]:
-        x, y = self.coords
-        return [[x+1, y], [x-1, y], [x, y-1], [x, y+1]]
-
     def height(self) -> int:
         x, y = self.coords
         return self.arr[x][y]
@@ -96,7 +92,7 @@ class Tree:
                 score += 1
                 if height <= tree:
                     break
-            
+
             return score
 
         match self.location():
@@ -112,12 +108,139 @@ class Tree:
 
                 trees = [row_left, row_right, col_up, col_down]
 
-                total = 0
+                total = 1
 
                 for tree_list in trees:
-                    total += tally(height = self.height(), trees = tree_list)
+                    total *= tally(height = self.height(), trees = tree_list)
 
                 return total
+
+            case 'Top-Left':
+                row_right = neighbors[0]
+                col_down = neighbors[1]
+
+                trees = [row_right, col_down]
+
+                total = 1
+
+                for tree_list in trees:
+                    total *= tally(self.height(), tree_list)
+
+                return total
+
+            case 'Top-Right':
+                row_left = neighbors[0]
+                col_down = neighbors[1]
+
+                row_left.reverse()
+
+                trees = [row_left, col_down]
+
+                total = 1
+
+                for tree_list in trees:
+                    total *= tally(self.height(), tree_list)
+
+                return total
+
+            case 'Bottom-Left':
+                row_right = neighbors[0]
+                col_up = neighbors[1]
+
+                col_up.reverse()
+                trees = [row_right, col_up]
+
+                total = 1
+                
+                for tree_list in trees:
+                    total *= tally(self.height(), tree_list)
+
+                return total
+
+            case 'Bottom-Right':
+                row_left = neighbors[0]
+                col_up = neighbors[1]
+
+                row_left.reverse()
+                col_up.reverse()
+
+                trees = [row_left, col_up]
+
+                total = 1
+
+                for tree_list in trees:
+                    total *= tally(self.height(), tree_list)
+
+                return total
+
+            case 'Outer-Left':
+                row_right = neighbors[0]
+                col_up = neighbors[1]
+                col_down = neighbors[2]
+
+                col_up.reverse()
+
+                trees = [row_right, col_up, col_down]
+
+                total = 1
+
+                for tree_list in trees:
+                    total *= tally(self.height(), tree_list)
+
+                return total
+
+            case 'Outer-Right':
+                row_left = neighbors[0]
+                col_up = neighbors[1]
+                col_down = neighbors[2]
+
+                row_left.reverse()
+                col_up.reverse()
+
+                trees = [row_left, col_up, col_down]
+
+                total = 1
+
+                for tree_list in trees:
+                    total *= tally(self.height(), tree_list)
+
+                return total
+
+            case 'Outer-Top':
+                row_left = neighbors[0]
+                row_right = neighbors[1]
+                col_down = neighbors[2]
+
+                row_left.reverse()
+
+                trees = [row_left, row_right, col_down]
+
+                total = 1
+
+                for tree_list in trees:
+                    total *= tally(self.height(), tree_list)
+
+                return total
+
+            case 'Outer-Bottom':
+                row_left = neighbors[0]
+                row_right = neighbors[1]
+                col_up = neighbors[2]
+
+                row_left.reverse()
+                col_up.reverse()
+
+                trees = [row_left, row_right, col_up]
+
+                total = 1
+
+                for tree_list in trees:
+                    total *= tally(self.height(), tree_list)
+
+                return total
+
+            case _:
+                return 0
 
 # Running total of visible trees
 viz_count = 0
@@ -187,45 +310,34 @@ def tree_neighbors_all(point: list[int], arr: list[list[int]]) -> list[list[int]
 
     return l
 
+# data_length = len(data)
+# neighbor_list = []
 
+# # viz_count will be the answer to part 1
+# for row_index, row in enumerate(data):
+#     for tree_index, tree in enumerate(row):
+#         x, y = [row_index, tree_index]
+#         neighbors = tree_neighbors_all([x, y], data)
+#         neighbors_max = [max(i) for i in neighbors]
+#         viz_bool = any([tree > i for i in neighbors_max])
 
-def scenic_score(point: list[int], arr: data = list[list[int]]) -> int:
+#         if any(
+#             [
+#                 viz_bool,
+#                 row_index in [0, data_length - 1],
+#                 tree_index in [0, data_length - 1]
+#             ]
+#         ):
+#             viz_count += 1
 
-    x, y = point
-    value = arr[x][y]
-    
-    neighbors = tree_neighbors_all(point, arr)
-
-
-
-data_length = len(data)
-neighbor_list = []
-
-# viz_count will be the answer to part 1
-for row_index, row in enumerate(data):
-    for tree_index, tree in enumerate(row):
-        x, y = [row_index, tree_index]
-        neighbors = tree_neighbors_all([x, y], data)
-        neighbors_max = [max(i) for i in neighbors]
-        viz_bool = any([tree > i for i in neighbors_max])
-
-        if any(
-            [
-                viz_bool,
-                row_index in [0, data_length - 1],
-                tree_index in [0, data_length - 1]
-            ]
-        ):
-            viz_count += 1
-
-        neighbor_list.append(neighbors)
+#         neighbor_list.append(neighbors)
 
 for i in data:
     print(*i)
 
 print('\n')
 
-t = Tree(coords = [3, 2], arr = data)
+t = Tree(coords = [4, 2], arr = data)
 
 print(t.location())
 print(t.height())
