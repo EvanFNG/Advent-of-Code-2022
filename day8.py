@@ -9,9 +9,7 @@ class Tree:
         self.arr = arr
 
         # Assume square array
-        self.arr_len = len(arr) * len(arr[0])
-        self.row_len = len(arr[0])
-        self.max_index = self.row_len - 1
+        self.max_index = len(arr[0]) - 1
     
     def __repr__(self) -> str:
         x, y = self.coords
@@ -23,40 +21,15 @@ class Tree:
 
     def location(self) -> str:
         '''
-        One of:
-            Top-Left, Top-Right,
-            Bottom-Left, Bottom-Right,
-            Outer-Left, Outer-Right,
-            Outer-Top, Outer-Bottom,
-            Inner
+        Determines whether the Tree is
+        an Inner Tree or Outer Tree.
         '''
+        x, y = self.coords
 
-        if self.coords == [0, 0]:
-            return 'Top-Left'
-
-        elif self.coords == [0, self.max_index]:
-            return 'Top-Right'
-
-        elif self.coords == [self.max_index, 0]:
-            return 'Bottom-Left'
-
-        elif self.coords == [self.max_index, self.max_index]:
-            return 'Bottom-Right'
-
-        elif (self.coords[0] in range(1, self.row_len)) and (self.coords[1] == 0):
-            return 'Outer-Left'
-
-        elif (self.coords[0] in range(1, self.row_len)) and (self.coords[1] == self.max_index):
-            return 'Outer-Right'
-
-        elif (self.coords[0] == 0) and (self.coords[1] in range(1, self.row_len)):
-            return 'Outer-Top'
-
-        elif (self.coords[0] == self.max_index) and (self.coords[1] in range(1, self.row_len)):
-            return 'Outer-Bottom'
-
-        else:
+        if (x not in [0, self.max_index]) and (y not in [0, self.max_index]):
             return 'Inner'
+        else:
+            return 'Outer'
 
     def neighbors_all(self) -> list[list[int]]:
 
@@ -132,12 +105,10 @@ for row_index, row in enumerate(data):
         neighbors_max = [max(i) for i in neighbors]
         visible = any([curr_tree.height() > i for i in neighbors_max])
 
-        if visible or (curr_tree.location() != 'Inner'):
+        if visible or (curr_tree.location() == 'Outer'):
             visibile_count += 1
 
         # Part Two
         scores.append(curr_tree.scenic_score())
 
 part_two_solution = max(scores)
-
-print(part_two_solution)
