@@ -16,9 +16,6 @@ class Point:
         self.coords[0] += dx
         self.coords[1] += dy
 
-    def coords(self):
-        return self.coords
-
 def process_move(s: str) -> list:
     '''
     Reads moves from the input file
