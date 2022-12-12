@@ -68,16 +68,3 @@ def part_one():
 
     for line in data:
         pass
-
-def first_marker_position(signal: str, n: int) -> int:
-    '''
-    Returns the first position of signal
-    where the previous n characters were all unique.
-    '''
-    for index, char in enumerate(signal[n::], start = n):
-        prev_n = signal[index-n:index]
-        if len(set(prev_n)) == n:
-            position = index
-            break
-
-    return position
