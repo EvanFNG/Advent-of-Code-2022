@@ -17,7 +17,8 @@ class Tree:
 
     def location(self) -> str:
         '''
-        Determines whether the Tree is an Inner Tree or Outer Tree.
+        Determines whether the Tree is an Inner Tree or Outer Tree
+        based on its place in the forest
         '''
         x, y = self.coords
 
@@ -51,7 +52,6 @@ class Tree:
     def scenic_score(self):
 
         neighbors = self.neighbors_all()
-        h = self.height()
 
         def tally(height: self.height(), trees: list) -> int:
 
