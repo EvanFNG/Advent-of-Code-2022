@@ -53,7 +53,7 @@ class Tree:
 
         neighbors = self.neighbors_all()
 
-        def tally(height: self.height(), trees: list) -> int:
+        def tally(height: int, trees: list) -> int:
 
             score = 0
             for tree in trees:
